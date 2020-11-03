@@ -1,0 +1,79 @@
+<div class="container">
+
+    <div [style.display]="showModal ? 'block' : 'none'" class="modal" id="imagemodal" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Add {{userType}}</h4>
+                    <button class="btn float-right" data-dismiss="modal" (click)="hide()"
+                        *ngIf="fields.controls.length > 0"><i class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                        <div formArrayName="fields">
+                            <div *ngFor="let item of fields.controls; let i=index">
+                                <button class="btn btn-danger float-right" *ngIf="fields.controls.length > 1"
+                                    (click)="deleteRow(i)" type="button"><i class="fa fa-trash"></i></button>
+                                <div [formGroupName]='i'>
+                                    <h4>{{userType}} {{i+1}}</h4>
+                                    <div class="form-group">
+                                        <label [attr.for]="'name'+i">Name</label>
+                                        <input id="{{'name'+i}}" class="form-control" placeholder="Enter Name"
+                                            type="text" formControlName="name">
+                                        <div *ngIf="item.controls.name.errors && item.controls.name.touched"
+                                            class="required">
+                                            <div *ngIf="item.controls.name.errors.required">This field is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label [attr.for]="'phone'+i">Phone Number</label>
+                                        <input id="{{'phone'+i}}" class="form-control" placeholder="Enter Phone Number"
+                                            type="number" formControlName="phone">
+                                        <div *ngIf="item.controls.phone.errors && item.controls.phone.touched"
+                                            class="required">
+                                            <div *ngIf="item.controls.phone.errors.required">This field is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success float-right" (click)="addMore()" title="Add New {{userType}}"
+                                type="button" style="margin-bottom:10px"><i class="fa fa-plus"></i> Add</button>
+
+                            <button *ngIf="fields.controls.length > 0" type="submit" class="btn btn-secondary btn-block"
+                                [disabled]="!userForm.valid">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mt-5">
+        <button (click)="openModal()" class="btn-primary btn-sm">Add {{userType}}</button>
+    </div>
+
+    <div class="row mt-5">
+        <input class="form-control pull-right" placeholder="Search" type="text" [(ngModel)]="searchValue" />
+    </div>
+
+    <div class="row mt-2">
+        <table class="table mt-2">
+            <thead>
+                <th class="header-column"> <a class="link" (click)="sortCol('name')">Name </a><i class="fa fa-sort"></i>
+                </th>
+                <th class="header-column"> <a class="link" (click)="sortCol('phone')">Phone Number </a><i
+                        class="fa fa-sort"></i></th>
+            </thead>
+            <tr *ngFor="let user of users | filter:searchValue |sort : sortColumn: orderby; let i=index">
+                <td>{{user.name}}</td>
+                <td>{{user.phone}}</td>
+            </tr>
+        </table>
+    </div>
+
+
+</div>

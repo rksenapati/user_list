@@ -1,0 +1,14 @@
+.header-column{
+    cursor: pointer !important;
+}
+.modal-body{
+    height:60vh;
+    overflow: auto;
+}
+.required{
+    color: red;
+    padding: 10px;
+}
+:host ::ng-deep button:disabled{
+    cursor: not-allowed;
+}
