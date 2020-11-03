@@ -51,15 +51,14 @@
         </div>
     </div>
 
-
-    <div class="row mt-5">
-        <button (click)="openModal()" class="btn-primary btn-sm">Add {{userType}}</button>
+    <div class="row">
+        <div class="col-4 mt-5 align-self-start">
+            <input class="form-control" placeholder="Search" type="text" [(ngModel)]="searchValue" />
+        </div>
+        <div class="col mt-5" style="float: right;">
+            <button (click)="openModal()" class="btn-primary btn-sm">Add {{userType}}</button>
+        </div>
     </div>
-
-    <div class="row mt-5">
-        <input class="form-control pull-right" placeholder="Search" type="text" [(ngModel)]="searchValue" />
-    </div>
-
     <div class="row mt-2">
         <table class="table mt-2">
             <thead>
